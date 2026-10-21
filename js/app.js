@@ -15,21 +15,6 @@
 //  - Comment accéder au prix du 2e cours ? Au 1er créneau du 3e cours ?
 // TODO : affichez `cours` dans la console avec console.log(), puis explorez-le.
 
-/*cours.forEach(function (c) {
-    if (cours[1] === c) {
-        console.log(c.prix);
-    }
-})
-
-cours.forEach(function (c) {
-    if (cours[2] === c) {
-       cours[2].creneaux.forEach(function (cr){
-        if(cours[2].creneaux[0]=== cr){
-            console.log(cours[2].creneaux[0]);
-        }
-       })
-    }
-})*/
 
 console.log(cours);
 
@@ -43,26 +28,17 @@ console.log(cours);
 //  summary-count, summary-total, confirm-button, message
 // TODO : récupérez ces éléments et rangez-les dans des constantes.
 // Question : quelle est la différence entre getElementById et querySelector ?
-
-let template = "";
 const container = document.getElementById("courses-container");
-cours.forEach(items => {
-
-    template += `<article class="cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm ring-2 ring-teal-600 transition hover:shadow-md" data-id="yoga">
-            <img src=${items.image} alt="Visuel du cours Yoga Flow" class="h-36 w-full object-cover" />
-            <div class="space-y-1 p-4">
-              <span class="inline-block rounded-full bg-teal-50 px-2.5 py-0.5 text-xs font-medium text-teal-700">${items.categorie}</span>
-              <h3 class="text-lg font-semibold text-slate-900">${items.nom}</h3>
-              <p class="text-sm text-slate-600">${items.duree}, avec ${items.coach}</p>
-              <p class="pt-1 text-base font-bold text-slate-900">${items.prix} € <span class="text-sm font-normal text-slate-500">par place</span></p>
-            </div>
-          </article>`});
-
-container.innerHTML = template;
-
-
-
-
+const title = document.getElementById("elected-course-title");
+const slots = document.getElementById("slots-container");
+const seatsContainer = document.getElementById("seats-container");
+const course = document.getElementById("summary-course");
+const slot = document.getElementById("summary-slot");
+const seats = document.getElementById("summary-seats");
+const count = document.getElementById("summary-count");
+const total = document.getElementById("summary-total");
+const button = document.getElementById("confirm-button");
+const message = document.getElementById("message");
 // ------------------------------------------------------------
 // ÉTAPE 2 : État de l'application
 // ------------------------------------------------------------
@@ -71,6 +47,10 @@ container.innerHTML = template;
 // Question : de quelles informations avez-vous besoin ?
 //  (cours choisi, créneau choisi, emplacements choisis...)
 // Indice : pourquoi un tableau est-il adapté pour les emplacements choisis ?
+
+
+
+
 
 
 // ------------------------------------------------------------
@@ -85,6 +65,20 @@ container.innerHTML = template;
 //  - Comment stocker l'id du cours sur la carte (indice : data-*) ?
 //  - Les template literals (`...${valeur}...`) peuvent-ils vous aider ?
 
+let template = "";
+cours.forEach(items => {
+
+  template += `<article class=" carte cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md" data-id="yoga">
+            <img src=${items.image} alt="Visuel du cours ${items.nom}" class="h-36 w-full object-cover" />
+            <div class="space-y-1 p-4">
+              <span class="inline-block rounded-full bg-teal-50 px-2.5 py-0.5 text-xs font-medium text-teal-700">${items.categorie}</span>
+              <h3 class="text-lg font-semibold text-slate-900">${items.nom}</h3>
+              <p class="text-sm text-slate-600">${items.duree}, avec ${items.coach}</p>
+              <p class="pt-1 text-base font-bold text-slate-900">${items.prix} € <span class="text-sm font-normal text-slate-500">par place</span></p>
+            </div>
+          </article>`});
+
+container.innerHTML = template;
 
 // ------------------------------------------------------------
 // ÉTAPE 4 : Sélectionner un cours (US02)
@@ -97,6 +91,17 @@ container.innerHTML = template;
 //  - Faut-il un écouteur par carte, ou un seul sur le conteneur ? Quels sont les avantages ?
 //  - Comment retrouver le cours à partir de l'id lu dans la carte ?
 //  - Que faut-il réinitialiser quand on change de cours ?
+const cartes = document.querySelectorAll('.carte');
+cartes.forEach(function (carte) {
+carte.addEventListener('click', function () {
+cartes.forEach(function (c) {
+c.classList.remove('ring-2', 'ring-teal-600');
+});
+carte.classList.add('ring-2', 'ring-teal-600');
+});
+});
+
+
 
 
 // ------------------------------------------------------------
