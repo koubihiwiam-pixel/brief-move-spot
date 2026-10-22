@@ -71,7 +71,7 @@ let Emplacement = [];
 let template = "";
 cours.forEach(items => {
 
-  template += `<article class=" carte cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md" data-id="${items.id}">
+  template += `<article class="carte cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md" data-id="${items.id}">
             <img src=${items.image} alt="Visuel du cours ${items.nom}" class="h-36 w-full object-cover" />
             <div class="space-y-1 p-4">
               <span class="inline-block rounded-full bg-teal-50 px-2.5 py-0.5 text-xs font-medium text-teal-700">${items.categorie}</span>
@@ -108,17 +108,21 @@ cartes.forEach(function (carte) {
     });
     title.textContent = coursTrouve.nom;
     slots.innerHTML = "";
-    coursTrouve.creneaux.forEach(function(creneau){
-      slots.innerHTML +=  `<button type="button" class="rounded-xl border px-4 py-2 text-sm font-medium transition border-teal-600 " data-id="${creneau.jour}">
-             ${creneau.jour} <span class="font-normal">${creneau.heure}</span>
+    coursTrouve.creneaux.forEach(function (creneau) {
+      slots.innerHTML += `<button type="button" class="btn-creneau rounded-xl border px-4 py-2 text-sm font-medium transition border-teal-600 " data-id="${creneau.jour}">
+            ${creneau.jour} <span class="font-normal">${creneau.heure}</span>
            </button>`;
-    })
+
+
+
+    });
+    btn();
+
   });
 });
 
 
 
-//bg-teal-600 text-white
 
 
 // ------------------------------------------------------------
@@ -131,6 +135,20 @@ cartes.forEach(function (carte) {
 // Questions :
 //  - Quand cette fonction doit-elle être appelée ?
 //  - Que se passe-t-il si aucun cours n'est encore sélectionné ?
+function btn() {
+  const boutton = document.querySelectorAll('.btn-creneau');
+boutton.forEach(function(btn){
+  btn.addEventListener('click', function(){
+    boutton.forEach(function(b){
+      b.classList.remove('bg-teal-600','text-white');
+    })
+    btn.classList.add('bg-teal-600','text-white');
+  });
+});
+}
+
+
+
 
 
 // ------------------------------------------------------------
@@ -195,4 +213,4 @@ cartes.forEach(function (carte) {
 // BONUS (Partie 2 : page « Mes réservations »)
 // ------------------------------------------------------------
 // Comment partager la liste des réservations confirmées entre deux pages
-// sans rien enregistrer durablement ? Réfléchissez aux options et à leurs limites.
+// sans rien enregistrer durablement ? Réfléchissez aux options et à leurs limites.*/
