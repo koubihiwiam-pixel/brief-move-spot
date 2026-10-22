@@ -29,7 +29,7 @@ console.log(cours);
 // TODO : récupérez ces éléments et rangez-les dans des constantes.
 // Question : quelle est la différence entre getElementById et querySelector ?
 const container = document.getElementById("courses-container");
-const title = document.getElementById("elected-course-title");
+const title = document.getElementById("selected-course-title");
 const slots = document.getElementById("slots-container");
 const seatsContainer = document.getElementById("seats-container");
 const course = document.getElementById("summary-course");
@@ -48,6 +48,9 @@ const message = document.getElementById("message");
 //  (cours choisi, créneau choisi, emplacements choisis...)
 // Indice : pourquoi un tableau est-il adapté pour les emplacements choisis ?
 
+let CoursChoisi = [];
+let CreneauChoisi = [];
+let Emplacement = [];
 
 
 
@@ -68,7 +71,7 @@ const message = document.getElementById("message");
 let template = "";
 cours.forEach(items => {
 
-  template += `<article class=" carte cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md" data-id="yoga">
+  template += `<article class=" carte cursor-pointer overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md" data-id="${items.id}">
             <img src=${items.image} alt="Visuel du cours ${items.nom}" class="h-36 w-full object-cover" />
             <div class="space-y-1 p-4">
               <span class="inline-block rounded-full bg-teal-50 px-2.5 py-0.5 text-xs font-medium text-teal-700">${items.categorie}</span>
@@ -93,15 +96,29 @@ container.innerHTML = template;
 //  - Que faut-il réinitialiser quand on change de cours ?
 const cartes = document.querySelectorAll('.carte');
 cartes.forEach(function (carte) {
-carte.addEventListener('click', function () {
-cartes.forEach(function (c) {
-c.classList.remove('ring-2', 'ring-teal-600');
-});
-carte.classList.add('ring-2', 'ring-teal-600');
-});
+  carte.addEventListener('click', function () {
+    cartes.forEach(function (c) {
+      c.classList.remove('ring-2', 'ring-teal-600');
+    });
+    carte.classList.add('ring-2', 'ring-teal-600');
+
+    const idCart = carte.dataset.id;
+    const coursTrouve = cours.find(function (c) {
+      return c.id === idCart;
+    });
+    title.textContent = coursTrouve.nom;
+    slots.innerHTML = "";
+    coursTrouve.creneaux.forEach(function(creneau){
+      slots.innerHTML +=  `<button type="button" class="rounded-xl border px-4 py-2 text-sm font-medium transition border-teal-600 " data-id="${creneau.jour}">
+             ${creneau.jour} <span class="font-normal">${creneau.heure}</span>
+           </button>`;
+    })
+  });
 });
 
 
+
+//bg-teal-600 text-white
 
 
 // ------------------------------------------------------------
