@@ -106,23 +106,18 @@ cartes.forEach(function (carte) {
     const coursTrouve = cours.find(function (c) {
       return c.id === idCart;
     });
+
     title.textContent = coursTrouve.nom;
     slots.innerHTML = "";
     coursTrouve.creneaux.forEach(function (creneau) {
-      slots.innerHTML += `<button type="button" class="btn-creneau rounded-xl border px-4 py-2 text-sm font-medium transition border-teal-600 " data-id="${creneau.jour}">
+      slots.innerHTML += `<button type="button" class="btn-creneau rounded-xl border px-4 py-2 text-sm font-medium transition border-teal-600 " data-id="${creneau.id}">
             ${creneau.jour} <span class="font-normal">${creneau.heure}</span>
            </button>`;
-
-
-
     });
-    btn();
+    renderCrenaux(coursTrouve);
 
   });
 });
-
-
-
 
 
 // ------------------------------------------------------------
@@ -135,21 +130,44 @@ cartes.forEach(function (carte) {
 // Questions :
 //  - Quand cette fonction doit-elle être appelée ?
 //  - Que se passe-t-il si aucun cours n'est encore sélectionné ?
-function btn() {
+function renderCrenaux(slectedCours) {
   const boutton = document.querySelectorAll('.btn-creneau');
-boutton.forEach(function(btn){
-  btn.addEventListener('click', function(){
-    boutton.forEach(function(b){
-      b.classList.remove('bg-teal-600','text-white');
-    })
-    btn.classList.add('bg-teal-600','text-white');
+  console.log(boutton)
+  boutton.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      boutton.forEach(function (b) {
+        b.classList.remove('bg-teal-600', 'text-white');
+      })
+      btn.classList.add('bg-teal-600', 'text-white');
+
+      const idBtn = btn.getAttribute("data-id");
+      console.log(idBtn);
+      const crenaux = slectedCours.creneaux.find(function (c) {
+        return c.id === idBtn;
+      });
+
+      console.log(crenaux.occupes);
+      const seat = document.querySelectorAll('#seats-container button');
+      console.log(seat);
+      seat.forEach(function (occp) {
+        const idBoutton = occp.getAttribute("data-id");
+        console.log(idBoutton);
+
+        if (crenaux.occupes.includes(idBoutton)) {
+        occp.classList.remove('h-11','rounded-lg', 'text-xs', 'font-semibold' , 'transition', 'border' , 'border-slate-300' , 'bg-white', 'text-slate-700', 'hover:border-teal-600');  
+        occp.classList.add('h-11', 'rounded-lg', 'text-xs', 'font-semibold', 'transition', 'cursor-not-allowed', 'bg-slate-300', 'text-slate-500');
+      }
+      })
+
+
+
+
+
+
+      //seatsContainer.textContent
+    });
   });
-});
 }
-
-
-
-
 
 // ------------------------------------------------------------
 // ÉTAPE 6 : Afficher le plan de la salle (US04)
@@ -164,6 +182,11 @@ boutton.forEach(function(btn){
 //  - Faut-il une boucle imbriquée ? Pourquoi ?
 
 
+
+
+
+//selectionner <button type="button" class="seat h-11 rounded-lg text-xs font-semibold transition bg-teal-600 text-white shadow" data-id="C3" aria-label="Tapis C3 sélectionné"
+//occupé <button type="button" class="seat h-11 rounded-lg text-xs font-semibold transition cursor-not-allowed bg-slate-300 text-slate-500" data-id="B3" disabled aria-label="Tapis B3 occupé">B3</button>
 // ------------------------------------------------------------
 // ÉTAPE 7 : Sélectionner / désélectionner des emplacements (US05)
 // ------------------------------------------------------------
